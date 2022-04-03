@@ -1,23 +1,27 @@
+from email.policy import default
 import string
 import sys
 from flask import Flask, abort, jsonify, redirect, render_template, request, session, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from itsdangerous import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:postgres@localhost:5432/todoapp'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 # models
 class Todo(db.Model):
   __tablename__ = 'todos'
   id = db.Column(db.Integer, primary_key=True)
   description = db.Column(db.String, nullable=False)
+  # checked = db.Column(db.Boolean, default=False)
 
   def __repr__(self):
       return f'<Todo {self.id} {self.description}>'
 
-db.create_all()
 
 @app.route('/')
 def index():
