@@ -1,6 +1,8 @@
 import string
-from flask import Flask, jsonify, redirect, render_template, request, session, url_for
+import sys
+from flask import Flask, abort, jsonify, redirect, render_template, request, session, url_for
 from flask_sqlalchemy import SQLAlchemy
+from itsdangerous import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:postgres@localhost:5432/todoapp'
@@ -23,10 +25,26 @@ def index():
 
 @app.route('/create', methods=['POST'])
 def create():
-  _description = request.get_json()['description'] # returns a dictionary 
-  _todo = Todo(description = _description)
-  db.session.add(_todo)
-  db.session.commit()
-  return jsonify({
-   'description': _todo.description
-  }) 
+  error = False
+  body = {}
+  try:
+    _description = request.get_json()['description'] # returns a dictionary 
+    _todo = Todo(description = _description)
+    db.session.add(_todo)
+    db.session.commit()
+    body['description'] = _todo.description 
+  except:
+    error=True
+    db.session.rollback()
+    print(sys.exc_info())
+  finally:
+    db.session.close()
+  if error:
+    abort(400)
+  else:
+    return jsonify(body)
+
+@app.route('/delete', methods=['DELETE'])
+def delete():
+  error = False
+  body = {}
