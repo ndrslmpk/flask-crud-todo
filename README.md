@@ -6,14 +6,13 @@ This part of the project consists of the backend.
 
 In our setting we are using
 
-Flask
-
+- Flask
 - SQLAlchemy
   - PSYCOPG2
   - Jinja2
   - flask_migrate
   - alembic
-    PostgreSQL
+- PostgreSQL
 
 ## Starting the Postgres DB
 
