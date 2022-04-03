@@ -1,5 +1,5 @@
 import string
-from flask import Flask, render_template, request, session
+from flask import Flask, jsonify, redirect, render_template, request, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -21,8 +21,12 @@ db.create_all()
 def index():
   return render_template('index.html', data=Todo.query.all())
 
-@app.route('/add')
-def add():
-   if request.method == 'POST':
-      results = request.form
-      session.add(Todo(description = results.description))
+@app.route('/create', methods=['POST'])
+def create():
+  _description = request.get_json()['description'] # returns a dictionary 
+  _todo = Todo(description = _description)
+  db.session.add(_todo)
+  db.session.commit()
+  return jsonify({
+   'description': _todo.description
+  }) 
