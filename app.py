@@ -17,7 +17,7 @@ class Todo(db.Model):
   __tablename__ = 'todos'
   id = db.Column(db.Integer, primary_key=True)
   description = db.Column(db.String, nullable=False)
-  completed = db.Column(db.Boolean, nullable=False, default=False)
+  completed = db.Column(db.Boolean, default=False, nullable=True)
 
   def __repr__(self):
       return f'<Todo {self.id} {self.description}>'
@@ -47,6 +47,33 @@ def create():
     abort(400)
   else:
     return jsonify(body)
+
+@app.route('/<int:_id>', methods=['POST'])
+def update():
+  error = False
+  body = {}
+  try:
+    print(request.get_json()['id'])
+    _id= request.get_json()['id']
+    _todo = Todo.query.get(_id)
+    if request.get_json()['description'] != None:
+      _todo.description = request.get_json()['description']
+      body['description'] = _todo.description
+    if request.get_json()['completed'] != None:
+      _todo.completed = request.get_json()['completed']
+      body['completed'] = _todo.completed
+    db.session.commit()
+  except:
+    error = True
+    db.session.rollback()
+    print(sys.exc_info())
+  finally:
+    db.session.close()
+  if error:
+    abort(400)
+  else:
+    return jsonify(body)
+
 
 @app.route('/delete', methods=['DELETE'])
 def delete():
