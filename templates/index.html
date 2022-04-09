@@ -9,8 +9,23 @@
       .hidden {
         display: none;
       }
+      .delete-button {
+        -webkit-appearance: none;
+        border: none;
+        outline: none;
+        color: red;
+        float: right;
+        cursor: pointer;
+        font-size: 15px;
+      }
+      li {
+        clear: both;
+        width: 300px;
+      }
       ul {
         list-style: none;
+        padding: 0px;
+        margin: 0px;
       }
     </style>
   </head>
@@ -41,7 +56,7 @@
         />
         {{d.description}}
         <button class="delete-button" id="{{d.id}}" type="submit">
-          Delete
+          &cross;
         </button>
       </li>
 
@@ -108,9 +123,13 @@
       const deleteButtons = document.querySelectorAll(".delete-button");
       for (let i = 0; i < deleteButtons.length; i++) {
         const deleteButton = deleteButtons[i];
+        console.log(deleteButton);
         deleteButton.onclick = function (e) {
           console.log("event", e);
+          console.log(e);
           const itemId = e.target.id;
+          console.log("itemId");
+          console.log(itemId);
           const itemId_dataset = e.target.dataset["id"];
           fetch(`/${itemId}/delete`, {
             method: "DELETE",

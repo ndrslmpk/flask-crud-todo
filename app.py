@@ -80,12 +80,11 @@ def delete(_id):
   error = False
   response = {}
   try:
-    print(request.get_json()['id'])
-    _id = request.get_json()['id']
-    _todo = Todo.query.get(_id)
+    print(request.get_json()) 
     print(_todo)
+    _todo = Todo.query.get(_id)
     db.session.delete(_todo)
-    Todo.query.filter_by(id=_id).delete
+    # Todo.query.filter_by(id=_id).delete
     db.session.commit()
   except:
     error = True
@@ -93,15 +92,10 @@ def delete(_id):
     print(sys.exc_info())
   finally:
     db.session.close()
-    app.response_class(
-      response=json.dumps({"status":"success"}),
-      status=200,
-      mimetype='application/json'
-    )
+    response = {"success": True}
   if error:
     abort(400)
   return jsonify(response)
-  # return redirect(url_for('index'))
     
 
 
