@@ -25,11 +25,11 @@
       {% for d in data %}
       <li>
         <input
-          type="checkbox"
           name="checked"
           class="check-completed"
           data-id="{{d.id}}"
           id="{{d.id}}"
+          type="checkbox"
           {%
           if
           d.completed
@@ -40,7 +40,11 @@
           %}
         />
         {{d.description}}
+        <button class="delete-button" id="{{d.id}}" type="submit">
+          Delete
+        </button>
       </li>
+
       {% endfor %}
     </ul>
 
@@ -62,7 +66,15 @@
             headers: {
               "Content-Type": "application/json",
             },
-          });
+          })
+            .then(function (e) {
+              document.getElementById("error").className = "hidden";
+              console.log(e);
+            })
+            .catch(function (e) {
+              document.getElementById("error").className = "";
+              console.log(e);
+            });
         };
       }
 
@@ -92,6 +104,25 @@
             console.log(e);
           });
       };
+
+      const deleteButtons = document.querySelectorAll(".delete-button");
+      for (let i = 0; i < deleteButtons.length; i++) {
+        const deleteButton = deleteButtons[i];
+        deleteButton.onclick = function (e) {
+          console.log("event", e);
+          const itemId = e.target.id;
+          const itemId_dataset = e.target.dataset["id"];
+          fetch(`/${itemId}/delete`, {
+            method: "DELETE",
+            body: JSON.stringify({
+              id: itemId,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+        };
+      }
     </script>
   </body>
 </html>

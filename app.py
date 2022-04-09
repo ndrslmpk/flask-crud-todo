@@ -20,12 +20,12 @@ class Todo(db.Model):
   completed = db.Column(db.Boolean, default=False, nullable=True)
 
   def __repr__(self):
-      return f'<Todo {self.id} {self.description}>'
+      return f'<Todo | id:{self.id} | description:{self.description} | completed:{self.completed}>'
 
 
 @app.route('/')
 def index():
-  return render_template('index.html', data=Todo.query.all())
+  return render_template('index.html', data=Todo.query.order_by('id').all())
 
 @app.route('/create', methods=['POST'])
 def create():
@@ -37,6 +37,7 @@ def create():
     db.session.add(_todo)
     db.session.commit()
     body['description'] = _todo.description 
+    body['completed'] = _todo.completed
   except:
     error=True
     db.session.rollback()
@@ -45,8 +46,7 @@ def create():
     db.session.close()
   if error:
     abort(400)
-  else:
-    return jsonify(body)
+  return jsonify(body)
 
 @app.route('/<int:_id>', methods=['POST'])
 def update():
@@ -75,10 +75,34 @@ def update():
     return jsonify(body)
 
 
-@app.route('/delete', methods=['DELETE'])
-def delete():
+@app.route('/<int:_id>/delete', methods=['DELETE'])
+def delete(_id):
   error = False
-  body = {}
+  response = {}
+  try:
+    print(request.get_json()['id'])
+    _id = request.get_json()['id']
+    _todo = Todo.query.get(_id)
+    print(_todo)
+    db.session.delete(_todo)
+    Todo.query.filter_by(id=_id).delete
+    db.session.commit()
+  except:
+    error = True
+    db.session.rollback()
+    print(sys.exc_info())
+  finally:
+    db.session.close()
+    app.response_class(
+      response=json.dumps({"status":"success"}),
+      status=200,
+      mimetype='application/json'
+    )
+  if error:
+    abort(400)
+  return jsonify(response)
+  # return redirect(url_for('index'))
+    
 
 
 @app.route('/<_id>/set-completed', methods=['POST'])
