@@ -79,3 +79,23 @@ def update():
 def delete():
   error = False
   body = {}
+
+
+@app.route('/<_id>/set-completed', methods=['POST'])
+def set_completed_todo(_id):
+  error = False
+  body = {}
+  try: 
+    _todo = Todo.query.get(_id)
+    completed = request.get_json()['completed']
+    if request.get_json()['completed'] != None:
+      _todo.completed = request.get_json()['completed']
+      body['completed'] = _todo.completed
+    db.session.commit()
+  except:
+    error = True
+    db.session.rollback()
+    print(sys.exc_info())
+  finally:
+      db.session.close()
+  return redirect(url_for('index'))
