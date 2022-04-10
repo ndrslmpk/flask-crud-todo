@@ -4,12 +4,22 @@ import sys
 from flask import Flask, abort, jsonify, redirect, render_template, request, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from sqlalchemy import MetaData
 from itsdangerous import json
 
+convention = {
+    "ix": 'ix_%(column_0_label)s',
+    "uq": "uq_%(table_name)s_%(column_0_name)s",
+    "ck": "ck_%(table_name)s_%(constraint_name)s",
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+    "pk": "pk_%(table_name)s"
+}
+
+metadata = MetaData(naming_convention=convention)
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:postgres@localhost:5432/todoapp'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+db = SQLAlchemy(app, metadata=metadata)
 migrate = Migrate(app, db)
 
 # models
@@ -18,7 +28,7 @@ class Todo(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   description = db.Column(db.String, nullable=False)
   completed = db.Column(db.Boolean, default=False, nullable=True)
-  list_id = db.Column(db.Integer, db.ForeignKey('todolists.id'), nullable=True)
+  list_id = db.Column(db.Integer, db.ForeignKey('todolists.id'), nullable=False, default=1)
 
   def __repr__(self):
       return f'<Todo | id:{self.id} | description:{self.description} | completed:{self.completed}>'
@@ -28,6 +38,9 @@ class TodoList(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String, nullable=False)
   todos = db.relationship('Todo', backref='list', lazy=True) 
+  
+  def __repr__(self):
+      return f'<Todolist | id:{self.id} | name:{self.name} | todos_fk:{self.todos}>'
 
 @app.route('/')
 def index():
