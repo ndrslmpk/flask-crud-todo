@@ -40,5 +40,6 @@ If changes to models are performed, those changes shall be managed using migrati
 
 - Let `alembic` (works under the hood of `flask_migrate`) detect changes to your db.Models by executing `flask db migrate`. This will create an migrationsfile that allows you to adopt a newer version of your database.
 - Therefore run `flask db upgrade` to let the git-like `flask_migrate` version pointer move to your newer database version. FYI: This command, although it might be pretty obvious is not performed automatically - this created kind of confusion to me in the beginning.
+- Not sure which database version you currently using? Use `flask db current` to get the current HEAD of your db.
 
 Find more informations at [alembic-docs]{https://alembic.sqlalchemy.org/en/latest/} [flask-migrate]{https://flask-migrate.readthedocs.io/en/latest/}
