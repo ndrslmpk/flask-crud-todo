@@ -18,10 +18,16 @@ class Todo(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   description = db.Column(db.String, nullable=False)
   completed = db.Column(db.Boolean, default=False, nullable=True)
+  list_id = db.Column(db.Integer, db.ForeignKey('todolists.id'), nullable=True)
 
   def __repr__(self):
       return f'<Todo | id:{self.id} | description:{self.description} | completed:{self.completed}>'
-
+  
+class TodoList(db.Model):
+  __tablename__ = 'todolists'
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String, nullable=False)
+  todos = db.relationship('Todo', backref='list', lazy=True) 
 
 @app.route('/')
 def index():
