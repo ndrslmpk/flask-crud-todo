@@ -43,3 +43,30 @@ If changes to models are performed, those changes shall be managed using migrati
 - Not sure which database version you currently using? Use `flask db current` to get the current HEAD of your db.
 
 Find more informations at [alembic-docs]{https://alembic.sqlalchemy.org/en/latest/} [flask-migrate]{https://flask-migrate.readthedocs.io/en/latest/}
+
+## Setting up the project
+
+### Setting up tailwind
+
+1. Creating a `/static´ folder for all of our assets, css files and js scripts.
+2. In the following `yarn` is being used to initialize the project by running the `yarn init`. You might want to use `npm` which will work the same. It will set up a `node_modules` directory which will include the relevant dependencies needed to use tailwind. As a beginner you might want to associate it with something like a hidden library, which includes all the lower level components to let your module run.
+3. Install tailwing by running `yarn add tailwindcss`.
+4. Add a `src` directory and a `style.css` file. Here you add
+
+```
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+5. For the generation of CSS from the tailwind preprocessor directives in `static/src/style.css` into the core css file `static/css/main.css`, we run `npx tailwindcss -i ./src/style.css -o css/main.css`
+6. Add a `tailwdind.config.css` file and add an initial [content configuration](https://tailwindcss.com/docs/content-configuration) to tell tailwind which HTML templates and JavaScript components should be supported by tailwind. To get more into the details of how to cofigure tailwind properly, watch the docs.
+
+```
+module.exports = {
+  content: [
+    './templates/**/*.{html,js}',
+  ],
+  // ...
+}
+```
