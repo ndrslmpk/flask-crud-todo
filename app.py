@@ -44,7 +44,8 @@ class TodoList(db.Model):
 
 @app.route('/')
 def index():
-  return render_template('index.html', data=Todo.query.order_by('id').all())
+  # return render_template('index.html', data=Todo.query.order_by('id').all())
+  return redirect(url_for('get_list_todos', list_id=1))
 
 @app.route('/create', methods=['POST'])
 def create():
@@ -100,8 +101,8 @@ def delete(_id):
   response = {}
   try:
     print(request.get_json()) 
-    print(_todo)
     _todo = Todo.query.get(_id)
+    print(_todo)
     db.session.delete(_todo)
     # Todo.query.filter_by(id=_id).delete
     db.session.commit()
@@ -118,7 +119,7 @@ def delete(_id):
     
 
 
-@app.route('/<_id>/set-completed', methods=['POST'])
+@app.route('/<int:_id>/set-completed', methods=['POST'])
 def set_completed_todo(_id):
   error = False
   body = {}
@@ -134,5 +135,13 @@ def set_completed_todo(_id):
     db.session.rollback()
     print(sys.exc_info())
   finally:
-      db.session.close()
+    db.session.close()
   return redirect(url_for('index'))
+
+@app.route('/lists/<int:list_id>', methods=['GET'])
+def get_list_todos(list_id):
+  return render_template('index.html',
+  lists=TodoList.query.all(),
+  active_list=TodoList.query.get(list_id),
+  todos=Todo.query.filter_by(list_id=list_id).order_by('id').all()
+  )

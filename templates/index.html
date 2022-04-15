@@ -24,7 +24,6 @@
       }
       li {
         clear: both;
-        width: 300px;
       }
       ul {
         list-style: none;
@@ -34,42 +33,64 @@
     </style>
   </head>
   <body>
+    <div class="navbar">
+      <div class="">
+        <button class="button my-4">Login</button>
+      </div>
+    </div>
     <div class="main-content-wrapper">
       <div class="todo-headline">Your next Todo App</div>
-      <form id="add-todo">
-        <div class="w-full">
-          <input type="text" name="description" id="description" />
-          <label for="description">Todo description</label>
+      <div class="flex">
+        <div class="lists-wrapper">
+          <ul id="lists">
+            {% for list in lists %}
+            <a href="/lists/{{list.id}}"><li>{{ list.name }}</li></a>
+            {% endfor %}
+          </ul>
         </div>
-        <button type="submit" class="button">Add Todo</button>
-      </form>
-      <div id="error" class="hidden">Something went wrong!</div>
-      <ul id="todos" class="todo-list">
-        {% for d in data %}
-        <li>
-          <input
-            name="checked"
-            class="check-completed"
-            data-id="{{d.id}}"
-            id="{{d.id}}"
-            type="checkbox"
-            {%
-            if
-            d.completed
-            %}
-            checked
-            {%
-            endif
-            %}
-          />
-          {{d.description}}
-          <button class="delete-button" id="{{d.id}}" type="submit">
-            &cross;
-          </button>
-        </li>
+        <div class="todos-wrapper">
+          <h3 class="font-bold text-xl">{{ active_list.name }}</h3>
+          <form id="add-todo">
+            <div class="w-full my-2">
+              <input
+                type="text"
+                name="description"
+                id="description"
+                class="bg-gray-300 border border-black rounded-md p-1"
+              />
+              <label for="description">Todo description</label>
+            </div>
+            <button type="submit" class="button my-2">Add Todo</button>
+          </form>
+          <div id="error" class="hidden">Something went wrong!</div>
+          <ul id="todos" class="todo-list">
+            {% for todo in todos %}
+            <li>
+              <input
+                name="checked"
+                class="check-completed"
+                data-id="{{todo.id}}"
+                id="{{todo.id}}"
+                type="checkbox"
+                {%
+                if
+                todo.completed
+                %}
+                checked
+                {%
+                endif
+                %}
+              />
+              {{todo.description}}
+              <button class="delete-button" id="{{todo.id}}" type="submit">
+                &cross;
+              </button>
+            </li>
 
-        {% endfor %}
-      </ul>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
       <div class="footer flex flex-col p-2">
         <h1 class="flex todo-headline w-full underline">Footer</h1>
         <div class="flex w-full">

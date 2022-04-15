@@ -39,7 +39,12 @@ Entrypoint for the application is the `app.py` file
 
 If changes to models are performed, those changes shall be managed using migrations to avoid an unexpected loss of data. So if you changed the Model within your flask app (thus changed the PostgreSQL database schema), the following procedure is the common working sequence.
 
-- Let `alembic` (works under the hood of `flask_migrate`) detect changes to your db.Models by executing `flask db migrate`. This will create a migrations file that allows you to adopt a newer version of your database. \_Important: Add a comment by using the `-m` flag to describe the actual changes happened in that particular migration, it will allow the db-changes to be much more understandable. Resulting in the following command to run db migrations: `flask db migrate -m "<your descriptive migration message>"`
+- Let `alembic` (works under the hood of `flask_migrate`) detect changes to your db.Models by executing `flask db migrate`. This will create a migrations file that allows you to adopt a newer version of your database. \_Important: Add a comment by using the `-m` flag to describe the actual changes happened in that particular migration, it will allow the db-changes to be much more understandable. Resulting in the following command to run db migrations:
+
+```
+flask db migrate -m "<your descriptive migration message>
+```
+
 - Therefore run `flask db upgrade` to let the git-like `flask_migrate` version pointer move to your newer database version. FYI: This command, although it might be pretty obvious is not performed automatically - this created kind of confusion to me in the beginning.
 - Not sure which database version you currently using? Use `flask db current` to get the current HEAD of your db.
 
@@ -72,9 +77,19 @@ module.exports = {
 };
 ```
 
-6. For the generation of CSS from the tailwind preprocessor directives in `static/src/style.css` into the core css file `static/css/main.css`, we run `npx tailwindcss -i ./static/src/style.css -o ./style/css/main.css`.
+6. For the generation of CSS from the tailwind preprocessor directives in `static/src/style.css` into the core css file `static/css/main.css`, we run
 
-   - **Remark:** If you furthermore want to make your development process more interactive you might want to automatically update your frontend by inline `html` styling changes. For this purpose you can activate the tailwind cli using `npx tailwindcss -i ./static/src/input.css -o ./static/dist/output.css --watch`. For more details follow the [Installation Guide](https://tailwindcss.com/docs/installation) for Tailwind CLI
+```
+npx tailwindcss -i ./static/src/style.css -o ./style/css/main.css
+```
+
+- **Remark:** If you furthermore want to make your development process more interactive you might want to automatically update your frontend by inline `html` styling changes. For this purpose you can activate the tailwind cli using
+
+```
+npx tailwindcss -i ./static/src/input.css -o ./static/dist/output.css --watch
+```
+
+For more details follow the [Installation Guide](https://tailwindcss.com/docs/installation) for Tailwind CLI
 
 Remarks:
 
