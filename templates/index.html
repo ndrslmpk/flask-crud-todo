@@ -34,43 +34,57 @@
     </style>
   </head>
   <body>
-    <form id="add-todo">
-      <div class="w-full">
-        <input type="text" name="description" id="description" />
-        <label for="description">Todo description</label>
-      </div>
-      <button type="submit" class="button">Add Todo</button>
-    </form>
-    <div id="error" class="hidden">Something went wrong!</div>
-    <ul id="todos" class="bg-gray-300">
-      {% for d in data %}
-      <li>
-        <input
-          name="checked"
-          class="check-completed"
-          data-id="{{d.id}}"
-          id="{{d.id}}"
-          type="checkbox"
-          {%
-          if
-          d.completed
-          %}
-          checked
-          {%
-          endif
-          %}
-        />
-        {{d.description}}
-        <button class="delete-button" id="{{d.id}}" type="submit">
-          &cross;
-        </button>
-      </li>
+    <div class="main-content-wrapper">
+      <div class="todo-headline">Your next Todo App</div>
+      <form id="add-todo">
+        <div class="w-full">
+          <input type="text" name="description" id="description" />
+          <label for="description">Todo description</label>
+        </div>
+        <button type="submit" class="button">Add Todo</button>
+      </form>
+      <div id="error" class="hidden">Something went wrong!</div>
+      <ul id="todos" class="todo-list">
+        {% for d in data %}
+        <li>
+          <input
+            name="checked"
+            class="check-completed"
+            data-id="{{d.id}}"
+            id="{{d.id}}"
+            type="checkbox"
+            {%
+            if
+            d.completed
+            %}
+            checked
+            {%
+            endif
+            %}
+          />
+          {{d.description}}
+          <button class="delete-button" id="{{d.id}}" type="submit">
+            &cross;
+          </button>
+        </li>
 
-      {% endfor %}
-    </ul>
-    <div class="todo-text text-green-600 bg-purple-700 hover:bg-black">
-      Tailwind testing div
+        {% endfor %}
+      </ul>
+      <div class="footer flex flex-col p-2">
+        <h1 class="flex todo-headline w-full underline">Footer</h1>
+        <div class="flex w-full">
+          <ul class="w-1/2">
+            <li>Imprint</li>
+            <li>Data protection</li>
+          </ul>
+          <ul class="w-1/2">
+            <li>About us</li>
+            <li>Career</li>
+          </ul>
+        </div>
+      </div>
     </div>
+
     <script>
       const checkboxes = document.querySelectorAll(".check-completed");
       for (let i = 0; i < checkboxes.length; i++) {

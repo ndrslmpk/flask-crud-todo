@@ -7,12 +7,13 @@ This part of the project consists of the backend.
 In our setting we are using
 
 - Flask
-- SQLAlchemy
-  - PSYCOPG2
+  - SQLAlchemy
+    - PSYCOPG2
   - Jinja2
   - flask_migrate
-  - alembic
+    - alembic
 - PostgreSQL
+- Tailwind CSS
 
 ## Starting the Postgres DB
 
