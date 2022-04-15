@@ -1,4 +1,4 @@
-"""empty message
+"""---> Todo: Add reference to Todolist id as column
 
 Revision ID: cb706f575421
 Revises: 4eb2cebfceeb

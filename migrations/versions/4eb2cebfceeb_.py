@@ -1,4 +1,4 @@
-"""empty message
+"""---> Add Todolist table
 
 Revision ID: 4eb2cebfceeb
 Revises: 4969288aa6ce

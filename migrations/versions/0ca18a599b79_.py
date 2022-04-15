@@ -1,4 +1,4 @@
-"""empty message
+"""---> Create Todo Table
 
 Revision ID: 0ca18a599b79
 Revises: 
