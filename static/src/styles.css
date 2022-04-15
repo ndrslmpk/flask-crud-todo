@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+
+.todo-text {
+  @apply text-xl font-mono font-bold;
+}
+
+@tailwind utilities;
