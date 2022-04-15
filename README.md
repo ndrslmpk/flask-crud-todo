@@ -59,8 +59,7 @@ Find more informations at [alembic-docs]{https://alembic.sqlalchemy.org/en/lates
 @tailwind utilities;
 ```
 
-5. For the generation of CSS from the tailwind preprocessor directives in `static/src/style.css` into the core css file `static/css/main.css`, we run `npx tailwindcss -i ./static/src/style.css -o ./style/css/main.css`
-6. Add a `tailwind.config.js` file and add an initial [content configuration](https://tailwindcss.com/docs/content-configuration) to tell tailwind which HTML templates and JavaScript components should be supported by tailwind. To get more into the details of how to cofigure tailwind properly, watch the docs.
+5. Add a `tailwind.config.js` file and add an initial [content configuration](https://tailwindcss.com/docs/content-configuration) to tell tailwind which HTML templates and JavaScript components should be supported by tailwind. To get more into the details of how to cofigure tailwind properly, watch the docs.
 
 ```
 module.exports = {
@@ -71,6 +70,14 @@ module.exports = {
   plugins: [],
 };
 ```
+
+6. For the generation of CSS from the tailwind preprocessor directives in `static/src/style.css` into the core css file `static/css/main.css`, we run `npx tailwindcss -i ./static/src/style.css -o ./style/css/main.css`.
+
+   - **Remark:** If you furthermore want to make your development process more interactive you might want to automatically update your frontend by inline `html` styling changes. For this purpose you can activate the tailwind cli using `npx tailwindcss -i ./static/src/input.css -o ./static/dist/output.css --watch`. For more details follow the [Installation Guide](https://tailwindcss.com/docs/installation) for Tailwind CLI
+
+Remarks:
+
+- In development mode you want be able to see style changes immediately. ~~So that the [Just-in-Time Mode](https://v2.tailwindcss.com/docs/just-in-time-mode) [Just-in-Time Mode](https://tailwindcss.com/blog/just-in-time-the-next-generation-of-tailwind-css) might be a useful thing.~~
 
 ### Modifying migrations
 

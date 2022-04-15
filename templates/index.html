@@ -35,12 +35,14 @@
   </head>
   <body>
     <form id="add-todo">
-      <input type="text" name="description" id="description" />
-      <label for="description">Todo description</label>
-      <button type="submit">Add Todo</button>
+      <div class="w-full">
+        <input type="text" name="description" id="description" />
+        <label for="description">Todo description</label>
+      </div>
+      <button type="submit" class="button">Add Todo</button>
     </form>
     <div id="error" class="hidden">Something went wrong!</div>
-    <ul id="todos">
+    <ul id="todos" class="bg-gray-300">
       {% for d in data %}
       <li>
         <input
@@ -66,7 +68,9 @@
 
       {% endfor %}
     </ul>
-    <div class="todo-text">Tailwind testing div</div>
+    <div class="todo-text text-green-600 bg-purple-700 hover:bg-black">
+      Tailwind testing div
+    </div>
     <script>
       const checkboxes = document.querySelectorAll(".check-completed");
       for (let i = 0; i < checkboxes.length; i++) {
