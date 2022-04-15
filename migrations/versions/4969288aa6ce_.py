@@ -1,4 +1,4 @@
-"""empty message
+"""---> Todo : Add completed column
 
 Revision ID: 4969288aa6ce
 Revises: 0ca18a599b79

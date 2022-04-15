@@ -1,0 +1,12 @@
+{
+  "name": "static",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ndrslmpk/flask-crud-todo",
+  "author": "ndrslmpk",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "tailwindcss": "^3.0.23"
+  }
+}

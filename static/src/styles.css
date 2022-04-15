@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+
+.navbar {
+  @apply flex flex-row justify-center bg-gray-300;
+}
+
+.lists-wrapper {
+  @apply block w-1/5 bg-yellow-300;
+}
+
+.lists-wrapper li {
+  @apply hover:underline hover:font-bold hover:bg-white hover:border hover:border-black;
+  @apply p-1;
+}
+
+.todos-wrapper {
+  @apply block w-4/5 p-2;
+}
+
+.main-content-wrapper {
+  @apply container mx-auto font-mono;
+}
+.todo-headline {
+  @apply text-2xl font-bold;
+}
+.todo-list {
+  @apply bg-gray-300 p-2;
+}
+.button {
+  @apply text-green-600 bg-purple-700 hover:bg-black hover:text-white font-bold py-2 px-4 rounded;
+}
+
+.footer {
+  @apply text-green-600 bg-purple-700 hover:bg-black hover:text-white;
+}
+.footer li {
+  @apply hover:underline hover:decoration-white;
+}
+
+@tailwind utilities;

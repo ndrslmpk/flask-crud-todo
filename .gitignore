@@ -1,2 +1,3 @@
 __pycache__/
 startdb.sh
+node_modules/
