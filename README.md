@@ -70,3 +70,9 @@ module.exports = {
   // ...
 }
 ```
+
+### Modifying migrations
+
+`migrations/alembic.ini` is the configuration file for alembic as the database migration tool for SQLAlchemy.
+
+- modifying the `file_template = <...>` line allows to define a structure for migration files. For instance, we are likely to use a chronical ordering of migration files to clearly be certain of the latest migration file without searching the history of migrations for the latest commit id, which is set as default file name.
