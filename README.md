@@ -38,7 +38,7 @@ Entrypoint for the application is the `app.py` file
 
 If changes to models are performed, those changes shall be managed using migrations to avoid an unexpected loss of data. So if you changed the Model within your flask app (thus changed the PostgreSQL database schema), the following procedure is the common working sequence.
 
-- Let `alembic` (works under the hood of `flask_migrate`) detect changes to your db.Models by executing `flask db migrate`. This will create an migrationsfile that allows you to adopt a newer version of your database.
+- Let `alembic` (works under the hood of `flask_migrate`) detect changes to your db.Models by executing `flask db migrate`. This will create a migrations file that allows you to adopt a newer version of your database. \_Important: Add a comment by using the `-m` flag to describe the actual changes happened in that particular migration, it will allow the db-changes to be much more understandable. Resulting in the following command to run db migrations: `flask db migrate -m "<your descriptive migration message>"`
 - Therefore run `flask db upgrade` to let the git-like `flask_migrate` version pointer move to your newer database version. FYI: This command, although it might be pretty obvious is not performed automatically - this created kind of confusion to me in the beginning.
 - Not sure which database version you currently using? Use `flask db current` to get the current HEAD of your db.
 
@@ -59,16 +59,17 @@ Find more informations at [alembic-docs]{https://alembic.sqlalchemy.org/en/lates
 @tailwind utilities;
 ```
 
-5. For the generation of CSS from the tailwind preprocessor directives in `static/src/style.css` into the core css file `static/css/main.css`, we run `npx tailwindcss -i ./src/style.css -o css/main.css`
-6. Add a `tailwdind.config.css` file and add an initial [content configuration](https://tailwindcss.com/docs/content-configuration) to tell tailwind which HTML templates and JavaScript components should be supported by tailwind. To get more into the details of how to cofigure tailwind properly, watch the docs.
+5. For the generation of CSS from the tailwind preprocessor directives in `static/src/style.css` into the core css file `static/css/main.css`, we run `npx tailwindcss -i ./static/src/style.css -o ./style/css/main.css`
+6. Add a `tailwind.config.js` file and add an initial [content configuration](https://tailwindcss.com/docs/content-configuration) to tell tailwind which HTML templates and JavaScript components should be supported by tailwind. To get more into the details of how to cofigure tailwind properly, watch the docs.
 
 ```
 module.exports = {
-  content: [
-    './templates/**/*.{html,js}',
-  ],
-  // ...
-}
+  content: ["./templates/*.{html,js,jsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
 ```
 
 ### Modifying migrations
