@@ -13,7 +13,7 @@ In our setting we are using
   - flask_migrate
     - alembic
 - PostgreSQL
-- Tailwind CSS
+- Tailwind CSS 3.
 
 ## Starting the Postgres DB
 
@@ -100,3 +100,21 @@ Remarks:
 `migrations/alembic.ini` is the configuration file for alembic as the database migration tool for SQLAlchemy.
 
 - modifying the `file_template = <...>` line allows to define a structure for migration files. For instance, we are likely to use a chronical ordering of migration files to clearly be certain of the latest migration file without searching the history of migrations for the latest commit id, which is set as default file name.
+
+### Adding a virtual environment to an existing project
+
+After developing the first functionalities used within the given project, I realized that it is useful to adopt a virtual environment for the project (local) to avoid versioning problems of used tools (e.g., imported libraries) that might collide with the version of your globally installed toolset. A virtual environment can be thought of as a local bubble that allows to separate your project from the rest of your (global) system.
+If you ever face that problem you will have to take a snapshot of the currently used tools inside your flask project. Perform a snapshot by executing `pip freeze > requirements.txt` inside the root directory of your project. The output will create a list of tools, which serve the base of (re-)setting up your local virtual environment.
+
+After installing your virtual environment you want to install the locally required dependencies to allow your project to run by running `pip install -r requirements.txt`.
+
+---
+
+## List of helpful resources adopted while development
+
+- https://www.digitalocean.com/community/tutorials/processing-incoming-request-data-in-flask
+
+**Virtual Environment - Requirments - Versioning**
+
+- https://www.dabapps.com/blog/introduction-to-pip-and-virtualenv-python/
+- https://stackoverflow.com/questions/55052434/does-python-requirements-file-have-to-specify-version
