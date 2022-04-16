@@ -106,7 +106,9 @@ Remarks:
 After developing the first functionalities used within the given project, I realized that it is useful to adopt a virtual environment for the project (local) to avoid versioning problems of used tools (e.g., imported libraries) that might collide with the version of your globally installed toolset. A virtual environment can be thought of as a local bubble that allows to separate your project from the rest of your (global) system.
 If you ever face that problem you will have to take a snapshot of the currently used tools inside your flask project. Perform a snapshot by executing `pip freeze > requirements.txt` inside the root directory of your project. The output will create a list of tools, which serve the base of (re-)setting up your local virtual environment.
 
-After installing your virtual environment you want to install the locally required dependencies to allow your project to run by running `pip install -r requirements.txt`.
+Creating the virtual environment is natively supported when using python 3.x. Check your current python version with `python -V`. If you do use a python version x.y < 3.4, you might need to find a workaround by using a third-party tool like [virtualenv](https://virtualenv.pypa.io/en/latest/). Performing `python -m venv <venv_name>` creates a new virtual environment directory.
+
+After installing your virtual environment you can start your virtual environment by activation using the `venv/scripts/activate`. As the initially installed version does not support any external tools or libraries, you are likely to install the required dependencies by running `pip install -r requirements.txt`.
 
 ---
 
