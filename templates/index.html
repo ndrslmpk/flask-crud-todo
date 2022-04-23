@@ -22,14 +22,6 @@
         cursor: pointer;
         font-size: 15px;
       }
-      li {
-        clear: both;
-      }
-      ul {
-        list-style: none;
-        padding: 0px;
-        margin: 0px;
-      }
     </style>
   </head>
   <body>
@@ -39,13 +31,32 @@
       </div>
     </div>
     <div class="main-content-wrapper">
-      <div class="todo-headline">Your next Todo App</div>
+      <div class="todo-headline py-3">Your next Todo App</div>
       <div class="flex">
         <div class="lists-wrapper">
-          <ul id="lists">
+          <ul id="todolists">
             {% for list in lists %}
-            <a href="/lists/{{list.id}}"><li>{{ list.name }}</li></a>
+            <a href="/lists/{{list.id}}"
+              ><li class="list-element">{{ list.name }}</li></a
+            >
             {% endfor %}
+            <div class="list-new-wrapper">
+              <form id="new-todolist">
+                <a href="#" class="flex w-full"
+                  ><li class="list-new">
+                    <button type="submit">
+                      <span class="px-2 m-1 font-light hover:font-black"
+                        >+</span
+                      ></button
+                    ><input
+                      type="text"
+                      name="todolist-name"
+                      id="todolist-name"
+                      class="list-new-input"
+                    /></li
+                ></a>
+              </form>
+            </div>
           </ul>
         </div>
         <div class="todos-wrapper">
@@ -91,16 +102,22 @@
           </ul>
         </div>
       </div>
-      <div class="footer flex flex-col p-2">
+      <div class="footer flex flex-col p-2 w-full">
         <h1 class="flex todo-headline w-full underline">Footer</h1>
         <div class="flex w-full">
-          <ul class="w-1/2">
+          <ul class="flex flex-col w-1/2">
             <li>Imprint</li>
             <li>Data protection</li>
           </ul>
-          <ul class="w-1/2">
+          <ul class="flex flex-col w-1/2">
             <li>About us</li>
-            <li>Career</li>
+            <li>
+              Career
+              <span
+                class="hover:bg-purple-700 bg-yellow-300 text-black hover:text-white rounded-md px-1 text-xs"
+                >We are hiring</span
+              >
+            </li>
           </ul>
         </div>
       </div>
@@ -137,7 +154,10 @@
       }
 
       document.getElementById("add-todo").onsubmit = function (e) {
+        console.log(e);
         e.preventDefault();
+        console.log(e);
+        const listId = null;
         fetch("/create", {
           method: "POST",
           body: JSON.stringify({
@@ -160,6 +180,35 @@
           .catch(function (e) {
             document.getElementById("error").className = "";
             console.log(e);
+          });
+      };
+
+      document.getElementById("new-todolist").onsubmit = function (e) {
+        console.log(e);
+        e.preventDefault();
+        console.log(e);
+        fetch("/lists/create", {
+          method: "POST",
+          body: JSON.stringify({
+            name: document.getElementById("todolist-name").value,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (jsonResponse) {
+            console.log("new-todolist - jsonResponse", jsonResponse);
+            const liItem = document.createElement("LI");
+            liItem.innerHTML = jsonResponse["name"];
+            document.getElementById("todolists").appendChild(liItem);
+            document.getElementById("error").className = "hidden";
+          })
+          .catch(function (e) {
+            document.getElementById("error").className = "";
+            console.log("new-todolist - error", e);
           });
       };
 
