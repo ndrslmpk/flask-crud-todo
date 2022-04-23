@@ -10,19 +10,25 @@
 }
 
 .list-element {
-  @apply hover:underline hover:font-bold hover:bg-white hover:border hover:border-black;
-  @apply p-1;
+  @apply hover:font-bold hover:bg-white hover:border hover:border-black;
+  @apply p-1 m-1;
+}
+
+.list-element-active {
+  @apply underline font-bold bg-white border border-black;
+  @apply p-1 m-1;
 }
 
 .list-new-wrapper {
   @apply flex w-full hover:no-underline;
+  @apply m-1;
 }
 
 .list-new {
   @apply flex w-full bg-transparent font-black hover:no-underline;
 }
 .list-new-input {
-  @apply flex w-full bg-transparent hover:border hover:border-black mx-2 hover:bg-gray-300 rounded-md p-1 text-sm;
+  @apply flex w-full bg-transparent border border-black mx-2 hover:bg-gray-300 rounded-md p-1 text-sm;
 }
 
 .todos-wrapper {

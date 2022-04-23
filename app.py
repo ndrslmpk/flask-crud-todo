@@ -70,26 +70,29 @@ def create():
     abort(400)
   return jsonify(body)
 
-  @app.route('lists/<uint:_id>/todo/create', methods=['POST'])
-  def create_list_todo(_id):
-    error = False
-    body = {}
-    try:
-      _description = request.get_json()['description'] # returns a dictionary 
-      _todo = Todo(description = _description)
-      db.session.add(_todo)
-      db.session.commit()
-      body['description'] = _todo.description 
-      body['completed'] = _todo.completed
-    except:
-      error=True
-      db.session.rollback()
-      print(sys.exc_info())
-    finally:
-      db.session.close()
-    if error:
-      abort(400)
-    return jsonify(body)
+@app.route('/lists/<int:_id>/todo/create', methods=['POST'])
+def create_list_todo(_id):
+  error = False
+  body = {}
+  try:
+    _description = request.get_json()['description'] # returns a dictionary 
+    _list_id = request.get_json()['list_id'] # returns a dictionary 
+    _todo = Todo(description = _description, list_id = _list_id )
+    db.session.add(_todo)
+    db.session.commit()
+    body['id'] = _todo.id 
+    body['description'] = _todo.description 
+    body['completed'] = _todo.completed
+    body['list_id'] = _todo.list_id
+  except:
+    error=True
+    db.session.rollback()
+    print(sys.exc_info())
+  finally:
+    db.session.close()
+  if error:
+    abort(400)
+  return jsonify(body)
 
 
 @app.route('/<int:_id>', methods=['POST'])
