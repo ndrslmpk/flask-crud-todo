@@ -18,7 +18,7 @@ Consists of the essential commands you need to execute to get the project runnin
 - Start tailwind cli:
   - `npx tailwindcss -i ./static/src/styles.css -o ./style/css/main.css --watch`
 
-Alternatively, you can run the script `./rundev.sh`
+Alternatively, you can run all commands by running the provided script performing `./rundev.sh`
 
 ## Tech-Stack
 
