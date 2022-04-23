@@ -2,6 +2,24 @@
 
 This part of the project consists of the backend.
 
+## Fast-track start
+
+Consists of the essential commands you need to execute to get the project running, while maintaining full control for development. More details follow.
+
+- Start db:
+  - `pg_ctl -D "C:/<path_to_PostgreSQL>/PostgreSQL/14/data" start`
+- Connect to db:
+  - `psql -U <username>`
+  - `\connect <database_name>`
+- Start flask:
+  - `venv/Scripts/activate`
+  - `export FLASK_APP=app.py`
+  - `flask run`
+- Start tailwind cli:
+  - `npx tailwindcss -i ./static/src/styles.css -o ./style/css/main.css --watch`
+
+Alternatively, you can run the script `./rundev.sh`
+
 ## Tech-Stack
 
 In our setting we are using
