@@ -19,13 +19,15 @@ In our setting we are using
 
 Check the installation of PostgreSQL.
 
-Start the PostgreSQL database `pg_ctl -D "C:/<path_to_PostgreSQL>/PostgreSQL/14/data" start`
+Start the PostgreSQL database server `pg_ctl -D "C:/<path_to_PostgreSQL>/PostgreSQL/14/data" start`
 
 - `-D` defines the data-directory of the database
-- `start`starts the database
+- `start` starts the database
 
-Connect to the database using psql
+**Connect to the PostgreSQL server** using psql
 `psql -U <username>` connect to the database using your account. If your default `psql` user is your local machines user name, you might want to change the default psql username to `postgres` by `export PGUSER=postgres` (on Windows).
+
+**Connecting to the database** is performed within the psql cli by executing the connect command followed by the database name. If you are not sure about the name of your database you might want to list all existing databases by `\l`. Now you can connect by typing `\connect <database_name>` or `\c <database_name>`.
 
 ## Initializing the flask application
 
@@ -80,13 +82,13 @@ module.exports = {
 6. For the generation of CSS from the tailwind preprocessor directives in `static/src/style.css` into the core css file `static/css/main.css`, we run
 
 ```
-npx tailwindcss -i ./static/src/style.css -o ./style/css/main.css
+npx tailwindcss -i ./static/src/styles.css -o ./style/css/main.css
 ```
 
-- **Remark:** If you furthermore want to make your development process more interactive you might want to automatically update your frontend by inline `html` styling changes. For this purpose you can activate the tailwind cli using
+- **Remark:** The given flags `-i <input/directory/styling-file.css>` and `-o <output/directory/styling-file.css>` stand for input- and output-directory. From the input directory all applied styling is converted and transfered to the output-directory file. If you furthermore want to make your development process more interactive you might want to automatically update your frontend by inline `html` styling changes. For this purpose you can activate the tailwind cli using
 
 ```
-npx tailwindcss -i ./static/src/input.css -o ./static/dist/output.css --watch
+npx tailwindcss -i ./static/src/styles.css -o ./style/css/main.css --watch
 ```
 
 For more details follow the [Installation Guide](https://tailwindcss.com/docs/installation) for Tailwind CLI
@@ -106,9 +108,15 @@ Remarks:
 After developing the first functionalities used within the given project, I realized that it is useful to adopt a virtual environment for the project (local) to avoid versioning problems of used tools (e.g., imported libraries) that might collide with the version of your globally installed toolset. A virtual environment can be thought of as a local bubble that allows to separate your project from the rest of your (global) system.
 If you ever face that problem you will have to take a snapshot of the currently used tools inside your flask project. Perform a snapshot by executing `pip freeze > requirements.txt` inside the root directory of your project. The output will create a list of tools, which serve the base of (re-)setting up your local virtual environment.
 
-Creating the virtual environment is natively supported when using python 3.x. Check your current python version with `python -V`. If you do use a python version x.y < 3.4, you might need to find a workaround by using a third-party tool like [virtualenv](https://virtualenv.pypa.io/en/latest/). Performing `python -m venv <venv_name>` creates a new virtual environment directory.
+Creating the virtual environment is natively supported when using python 3.x. Check your current python version with `python -V`. If you do use a `python version x.y>3.4`, you might need to find a workaround by using a third-party tool like [virtualenv](https://virtualenv.pypa.io/en/latest/). Performing `python -m venv <venv_name>` creates a new virtual environment directory.
 
-After installing your virtual environment you can start your virtual environment by activation using the `venv/scripts/activate`. As the initially installed version does not support any external tools or libraries, you are likely to install the required dependencies by running `pip install -r requirements.txt`.
+After installing your virtual environment you can start it by activation, using the `. venv/scripts/activate` command (for Windows10). The bash will then display a `venv` inside the terminal, which indicates that you are working inside your virtual environment. . As the initially installed version does not support any external tools or libraries, you are likely required to install the dependencies by `pip install -r requirements.txt`.
+
+Since your installation of python might include hardware specifics, it might lead Keep in mind that the virtual environment should not be part of your git. Instead, add it to your `.gitignore`
+
+### Documentation
+
+Following international conventions on a unified documentation of python code, the [PEP 257 - Docstring Conventions](https://peps.python.org/pep-0257/) as a Python Enhancement Proposal (PEP) defined conventions to follow.
 
 ---
 
