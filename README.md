@@ -16,7 +16,7 @@ Consists of the essential commands you need to execute to get the project runnin
   - `export FLASK_APP=app.py`
   - `flask run`
 - Start tailwind cli:
-  - `npx tailwindcss -i ./static/src/styles.css -o ./style/css/main.css --watch`
+  - `npx tailwindcss -i ./static/src/styles.css -o ./static/css/main.css --watch`
 
 Alternatively, you can run all commands by running the provided script performing `./rundev.sh`
 
@@ -33,7 +33,9 @@ In our setting we are using
 - PostgreSQL
 - Tailwind CSS 3.
 
-## Starting the Postgres DB
+## Getting started: Run the app
+
+### Starting the Postgres DB
 
 Check the installation of PostgreSQL.
 
@@ -47,7 +49,7 @@ Start the PostgreSQL database server `pg_ctl -D "C:/<path_to_PostgreSQL>/Postgre
 
 **Connecting to the database** is performed within the psql cli by executing the connect command followed by the database name. If you are not sure about the name of your database you might want to list all existing databases by `\l`. Now you can connect by typing `\connect <database_name>` or `\c <database_name>`.
 
-## Initializing the flask application
+### Initializing the flask application
 
 Entrypoint for the application is the `app.py` file
 
@@ -55,7 +57,9 @@ Entrypoint for the application is the `app.py` file
 - Set the entry file for the flask project `export FLASK_APP=app.py`
 - Start the flask app `flask run`
 
-## Running migrations
+## Development Process: Setting up the project and understanding tools for development
+
+### Running migrations
 
 If changes to models are performed, those changes shall be managed using migrations to avoid an unexpected loss of data. So if you changed the Model within your flask app (thus changed the PostgreSQL database schema), the following procedure is the common working sequence.
 
@@ -69,8 +73,6 @@ flask db migrate -m "<your descriptive migration message>
 - Not sure which database version you currently using? Use `flask db current` to get the current HEAD of your db.
 
 Find more informations at [alembic-docs](https://alembic.sqlalchemy.org/en/latest/) [flask-migrate](https://flask-migrate.readthedocs.io/en/latest/)
-
-## Setting up the project
 
 ### Setting up tailwind
 
@@ -146,3 +148,7 @@ Following international conventions on a unified documentation of python code, t
 
 - https://www.dabapps.com/blog/introduction-to-pip-and-virtualenv-python/
 - https://stackoverflow.com/questions/55052434/does-python-requirements-file-have-to-specify-version
+
+**Project Structure, API, and web service concepts**
+
+- https://mark.douthwaite.io/getting-production-ready-a-minimal-flask-app/
