@@ -4,7 +4,7 @@ import sys
 from flask import Flask, abort, jsonify, redirect, render_template, request, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, true
 from itsdangerous import json
 
 convention = {
@@ -37,7 +37,7 @@ class TodoList(db.Model):
   __tablename__ = 'todolists'
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String, nullable=False)
-  todos = db.relationship('Todo', backref='list', lazy=True) 
+  todos = db.relationship('Todo', backref='list', cascade='all, delete-orphan', lazy=True) 
   
   def __repr__(self):
       return f'<Todolist | id:{self.id} | name:{self.name} | todos_fk:{self.todos}>'
@@ -188,6 +188,29 @@ def create_list():
   except:
     error=True
     db.session.rollback()
+    print(sys.exc_info())
+  finally:
+    db.session.close()
+  if error:
+    abort(400)
+  return jsonify(body)
+
+@app.route('/lists/<int:list_id>/delete', methods=['DELETE'])
+def delete_list_todo(list_id):
+  body = {}
+  error = False
+  print(request.get_json())
+  try:
+    _todolist = TodoList.query.filter_by(id=list_id).first_or_404()
+    print("TodoList")
+    print(_todolist)
+    db.session.delete(_todolist)
+    db.session.commit()
+    print(_todolist)
+  except: 
+    error=True
+    db.session.rollback()
+    print("ErrorMessage")
     print(sys.exc_info())
   finally:
     db.session.close()

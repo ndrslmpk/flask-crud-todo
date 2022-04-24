@@ -13,7 +13,16 @@
       .hidden {
         display: none;
       }
-      .delete-button {
+      .todo-delete-button {
+        -webkit-appearance: none;
+        border: none;
+        outline: none;
+        color: red;
+        float: right;
+        cursor: pointer;
+        font-size: 15px;
+      }
+      .list-delete-button {
         -webkit-appearance: none;
         border: none;
         outline: none;
@@ -40,9 +49,25 @@
               {% if list.name == active_list.name%}
               <li class="list-element-active" id="{{list.id}}">
                 {{ list.name }}
+                <button
+                  class="list-delete-button"
+                  id="{{list.id}}"
+                  type="submit"
+                >
+                  &cross;
+                </button>
               </li>
               {% else %}
-              <li class="list-element" id="{{list.id}}">{{ list.name }}</li>
+              <li class="list-element" id="{{list.id}}">
+                {{ list.name }}
+                <button
+                  class="list-delete-button"
+                  id="{{list.id}}"
+                  type="submit"
+                >
+                  &cross;
+                </button>
+              </li>
               {% endif %}
             </a>
             {% endfor %}
@@ -100,7 +125,7 @@
                 %}
               />
               {{todo.description}}
-              <button class="delete-button" id="{{todo.id}}" type="submit">
+              <button class="todo-delete-button" id="{{todo.id}}" type="submit">
                 &cross;
               </button>
             </li>
@@ -199,7 +224,6 @@
           });
       };
 
-      <!-- Creates a new todolist -->
       document.getElementById("new-todolist").onsubmit = function (e) {
         e.preventDefault();
         console.log(e);
@@ -228,21 +252,40 @@
           });
       };
 
-      const deleteButtons = document.querySelectorAll(".delete-button");
-      for (let i = 0; i < deleteButtons.length; i++) {
-        const deleteButton = deleteButtons[i];
-        console.log(deleteButton);
-        deleteButton.onclick = function (e) {
-          console.log("event", e);
-          console.log(e);
+      const deleteTodoButtons = document.querySelectorAll(
+        ".todo-delete-button"
+      );
+      for (let i = 0; i < deleteTodoButtons.length; i++) {
+        const deleteTodoButton = deleteTodoButtons[i];
+        console.log(deleteTodoButton);
+        deleteTodoButton.onclick = function (e) {
           const itemId = e.target.id;
-          console.log("itemId");
-          console.log(itemId);
           const itemId_dataset = e.target.dataset["id"];
           fetch(`/${itemId}/delete`, {
             method: "DELETE",
             body: JSON.stringify({
               id: itemId,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+        };
+      }
+
+      const deleteTodolistButtons = document.querySelectorAll(
+        ".list-delete-button"
+      );
+      for (let i = 0; i < deleteTodolistButtons.length; i++) {
+        const deleteTodolistButton = deleteTodolistButtons[i];
+        console.log(deleteTodolistButton);
+        deleteTodolistButton.onclick = function (e) {
+          const listId = e.target.id;
+          const itemId_dataset = e.target.dataset["id"];
+          fetch(`/lists/${listId}/delete`, {
+            method: "DELETE",
+            body: JSON.stringify({
+              id: listId,
             }),
             headers: {
               "Content-Type": "application/json",
