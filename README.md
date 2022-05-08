@@ -44,8 +44,9 @@ Start the PostgreSQL database server `pg_ctl -D "C:/<path_to_PostgreSQL>/Postgre
 - `-D` defines the data-directory of the database
 - `start` starts the database
 
-**Connect to the PostgreSQL server** using psql
-`psql -U <username>` connect to the database using your account. If your default `psql` user is your local machines user name, you might want to change the default psql username to `postgres` by `export PGUSER=postgres` (on Windows).
+#### **Connect to the PostgreSQL server**
+
+using psql `psql -U <username>` connect to the database using your account. If your default `psql` user is your local machines user name, you might want to change the default psql username to `postgres` by `export PGUSER=postgres` (on Windows).
 
 **Connecting to the database** is performed within the psql cli by executing the connect command followed by the database name. If you are not sure about the name of your database you might want to list all existing databases by `\l`. Now you can connect by typing `\connect <database_name>` or `\c <database_name>`.
 
@@ -133,6 +134,14 @@ Creating the virtual environment is natively supported when using python 3.x. Ch
 After installing your virtual environment you can start it by activation, using the `. venv/scripts/activate` command (for Windows10). The bash will then display a `venv` inside the terminal, which indicates that you are working inside your virtual environment. . As the initially installed version does not support any external tools or libraries, you are likely required to install the dependencies by `pip install -r requirements.txt`.
 
 Since your installation of python might include hardware specifics, it might lead Keep in mind that the virtual environment should not be part of your git. Instead, add it to your `.gitignore`
+
+### Crawling Postgres database via psql
+
+When running first backend operations _(#create)_ on the database, and most likely, when you do not already added View components, e.g., _#index #show_, you will very likely want to show whether your operations are successful by checking the inserted data.
+
+As already outlined earlier you first need to [connect to the PostgreSQL database](####connect-to-the-postgresql-server). Then you are able to execute normal SQL statements, like `SELECT * FROM <tablename>` (_On Windows:_ `SELECT * FROM <tablename>`) inside your `psql` Terminal.
+
+_Remark:_ **Schema** Keep in mind, that your database might want you to explicitly define the DB Schema your table can be found. E.g., when your table is located on a public scope `SELECT * FROM public."<tablename>"`
 
 ### Documentation
 
